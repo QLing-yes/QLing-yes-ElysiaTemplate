@@ -1,0 +1,120 @@
+{
+  // "typescript.experimental.useTsgo": true,// 实验性：使用GO编写的TS语言服务，大大提高提示速度
+  "editor.guides.bracketPairs": "active",
+  // Enable the ESlint flat config support
+  "eslint.experimental.useFlatConfig": true,
+  // Disable the default formatter, use eslint instead
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  // Auto fix
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "never",
+    "source.addMissingImports.ts": "never",
+    "source.fixAll.ts": "never",
+    "source.removeUnused.ts": "never",
+    "source.removeUnusedImports": "never",
+    "source.sortImports": "never",
+    "source.fixAll.eslint": "never"
+  },
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  "eslint.rules.customizations": [
+    {
+      "rule": "style/*",
+      "severity": "off"
+    },
+    {
+      "rule": "*-indent",
+      "severity": "off"
+    },
+    {
+      "rule": "*-spacing",
+      "severity": "off"
+    },
+    {
+      "rule": "*-spaces",
+      "severity": "off"
+    },
+    {
+      "rule": "*-order",
+      "severity": "off"
+    },
+    {
+      "rule": "*-dangle",
+      "severity": "off"
+    },
+    {
+      "rule": "*-newline",
+      "severity": "off"
+    },
+    {
+      "rule": "*quotes",
+      "severity": "off"
+    },
+    {
+      "rule": "*semi",
+      "severity": "off"
+    }
+  ],
+  // Enable eslint for all supported languages
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml"
+  ],
+  "files.associations": {
+    "pages.json": "jsonc",
+    "manifest.json": "jsonc",
+  },
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "on",
+    "strings": "on"
+  },
+  "typescript.suggest.paths": false,
+  "javascript.suggest.paths": false,
+  "explorer.sortOrder": "type",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": true,
+  // ${} dirname 目录名称，basename 开头名称，extname 扩展名称
+  "explorer.fileNesting.patterns": {
+    "*": "${basename}.*.${extname}",
+    ".gitignore": ".gitattributes, .gitmodules, .gitmessage, .mailmap, .git-blame*",
+    "*.css": "$(capture).*.map",
+    "*.scss": "$(capture).*",
+    "*.js": "$(capture).js.map, $(capture).d.ts.map, $(capture).min.js, $(capture).d.ts",
+    "*.jsx": "$(capture).js",
+    "*.ts": "$(capture).js, $(capture).*.ts",
+    "*.tsx": "$(capture).ts",
+    "*.vue": "$(capture).*.ts, $(capture).*.js",
+    "index.d.ts": "*.d.ts",
+    "shims.d.ts": "*.d.ts",
+    ".env": "*.env, .env.*, env.d.ts",
+    "biome.json*":".biomeignore",
+    "dockerfile": ".dockerignore, dockerfile*",
+    "package.json": ".npmrc,*.lock,.gitignore,README.md,LICENSE",
+    // "tsconfig.json":"biome.json,prisma.config.ts"
+  },
+  "Codegeex.CompletionModel": "CodeGeeX Pro[Beta]",
+  "Codegeex.GenerationPreference": "line by line",
+  "Codegeex.CompletionDelay": 0.4,
+  "Codegeex.CandidateNum": "2 (中)",
+  "Codegeex.Comment.LanguagePreference": "Default",
+  "Codegeex.Chat.LanguagePreference": "中文",
+  "workbench.colorCustomizations": {
+    "sash.hoverBorder": "#5ed011",
+    "statusBar.background": "#49a10d",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#5ed011",
+    "statusBarItem.remoteBackground": "#49a10d",
+    "statusBarItem.remoteForeground": "#e7e7e7"
+  },
+  "peacock.color": "#49a10d",
+}

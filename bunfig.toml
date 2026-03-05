@@ -1,0 +1,13 @@
+# 在 “bun run” 之前运行的脚本
+# preload = ["./support/script/index.ts"]
+# 遥测
+telemetry = false
+# 设置日志级别
+logLevel = "debug" # "debug" | "warn" | "error"
+# 降低内存使用量，但会牺牲性能
+# smol = true
+[install]
+saveTextLockfile = true
+[run]
+# Windows默认为bun，其他平台默认system
+# shell = "system"

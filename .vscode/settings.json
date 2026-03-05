@@ -109,12 +109,12 @@
   "Codegeex.Comment.LanguagePreference": "Default",
   "Codegeex.Chat.LanguagePreference": "中文",
   "workbench.colorCustomizations": {
-    "sash.hoverBorder": "#5ed011",
-    "statusBar.background": "#49a10d",
+    "sash.hoverBorder": "#5c0da1",
+    "statusBar.background": "#5c0da1",
     "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#5ed011",
-    "statusBarItem.remoteBackground": "#49a10d",
+    "statusBarItem.hoverBackground": "#5c0da1",
+    "statusBarItem.remoteBackground": "#5c0da1",
     "statusBarItem.remoteForeground": "#e7e7e7"
   },
-  "peacock.color": "#49a10d",
+  "peacock.color": "#5c0da1",
 }

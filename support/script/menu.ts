@@ -3,7 +3,7 @@
  * 方向键 ↑↓ 选择，回车执行，Ctrl+C 退出
  */
 
-const main = "./index.ts";
+const main = "./app/index.ts";
 const outDir = "./dist";
 
 /** 构建模式配置 */

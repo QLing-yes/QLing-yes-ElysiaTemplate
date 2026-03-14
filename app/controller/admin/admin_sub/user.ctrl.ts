@@ -7,7 +7,7 @@ import {
 } from "@/support/generated/prismabox/User";
 
 export default new Elysia({ name: __filename, prefix: "" })
-	.get("/2_c", () => "2_c")
+	.get("/3_c", () => "3_c")
 	.get("/redis", async () => {
 		await redis.set("hello", "world");
 		const result = await redis.get("hello");

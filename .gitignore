@@ -38,3 +38,14 @@ yarn-error.log*
 **/*.log
 package-lock.json
 **/*.bun
+bun.lockb
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# cache
+.cache/
+*.tsbuildinfo

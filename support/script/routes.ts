@@ -1,4 +1,3 @@
-import { log } from "node:console";
 import { filePathTree, write } from "@/app/utils/nodejs_file";
 
 interface DirInfo {
@@ -24,11 +23,18 @@ interface Config {
 }
 
 /** 生成插件代码 */
-function generatePlugin(idx: number, name: string, fullPath: string, mods: number[], childs: number[], prefix: string): string {
+function generatePlugin(
+	idx: number,
+	name: string,
+	fullPath: string,
+	mods: number[],
+	childs: number[],
+	prefix: string,
+): string {
 	const opts = name ? `{ prefix: "${name}" }` : "{}";
 	let code = `\n/** ${fullPath} */\nconst ${prefix}${idx} = () => new Elysia(${opts})`;
-	mods.forEach((i) => code += `\n\t.use(mod_${i})`);
-	childs.forEach((id) => code += `\n\t.use(${prefix}${id}())`);
+	mods.forEach((i) => (code += `\n\t.use(mod_${i})`));
+	childs.forEach((id) => (code += `\n\t.use(${prefix}${id}())`));
 	return code;
 }
 
@@ -51,7 +57,7 @@ function buildDirInfo(dirKeys: string[], base: string): Map<string, DirInfo> {
 		const parts = rel.split("/");
 		map.set(dir, {
 			idx: i,
-			name: rel ? parts.at(-1) ?? "" : "",
+			name: rel ? (parts.at(-1) ?? "") : "",
 			fullPath: rel || "/",
 		});
 	});
@@ -59,7 +65,11 @@ function buildDirInfo(dirKeys: string[], base: string): Map<string, DirInfo> {
 }
 
 /** 获取模块索引 */
-function getMods(tree: Record<string, Record<string, number[]>>, dir: string, suffix: string[]): number[] {
+function getMods(
+	tree: Record<string, Record<string, number[]>>,
+	dir: string,
+	suffix: string[],
+): number[] {
 	const obj = tree[dir];
 	if (!obj) return [];
 	const indexes: number[] = [];
@@ -68,7 +78,11 @@ function getMods(tree: Record<string, Record<string, number[]>>, dir: string, su
 }
 
 /** 构建父子关系 */
-function buildChildren(dirKeys: string[], dirInfo: Map<string, DirInfo>, base: string): Map<string, number[]> {
+function buildChildren(
+	dirKeys: string[],
+	dirInfo: Map<string, DirInfo>,
+	base: string,
+): Map<string, number[]> {
 	const childrenOf = new Map<string, number[]>();
 
 	dirKeys.forEach((dir) => {
@@ -98,15 +112,17 @@ const DEFAULT_CONFIG = {
 };
 
 export default function generate(op: Config) {
-	const config = { ...DEFAULT_CONFIG, ...op, output: { ...DEFAULT_CONFIG.output, ...op.output } };
+	const config = {
+		...DEFAULT_CONFIG,
+		...op,
+		output: { ...DEFAULT_CONFIG.output, ...op.output },
+	};
 	const { suffix, output } = config;
 
 	const { list: fileList, tree: fileTree } = filePathTree(
 		suffix,
 		suffix.map((k) => `${config.fromDir}/**/*${k}`),
 	);
-
-	log(config.fromDir, fileTree);
 
 	const file = write(config.target);
 	file.write(`${output.comment}\n${output.import}\n`);
@@ -119,16 +135,27 @@ export default function generate(op: Config) {
 	const maxDepth = Math.max(...dirKeys.map((d) => getDepth(d, config.fromDir)));
 
 	for (let depth = maxDepth; depth >= 0; depth--) {
-		dirKeys.filter((d) => getDepth(d, config.fromDir) === depth).forEach((dir) => {
-			const info = dirInfo.get(dir);
-			if (!info) return;
+		dirKeys
+			.filter((d) => getDepth(d, config.fromDir) === depth)
+			.forEach((dir) => {
+				const info = dirInfo.get(dir);
+				if (!info) return;
 
-			const mods = getMods(fileTree, dir, suffix);
-			const childs = childrenOf.get(dir) ?? [];
+				const mods = getMods(fileTree, dir, suffix);
+				const childs = childrenOf.get(dir) ?? [];
 
-			file.write(generatePlugin(info.idx, info.name, info.fullPath, mods, childs, output.pluginPrefix));
-			file.write("\n");
-		});
+				file.write(
+					generatePlugin(
+						info.idx,
+						info.name,
+						info.fullPath,
+						mods,
+						childs,
+						output.pluginPrefix,
+					),
+				);
+				file.write("\n");
+			});
 	}
 
 	file.write(`\nexport default ${output.exportDefault};\n`);

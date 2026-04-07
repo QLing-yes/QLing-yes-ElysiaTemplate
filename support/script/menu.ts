@@ -38,16 +38,9 @@ const list: Cmd[] = [
   {
     group: "开发",
     label: "generate",
-    cmd: "bun ./support/script/index.ts && bun --bun run prisma generate",
-    desc: "生成 路由和Prisma",
+    cmd: "bun ./support/script/index.ts",
+    desc: "生成 路由",
   },
-  {
-    group: "开发",
-    label: "prisma-studio",
-    cmd: "bun --bun run prisma studio",
-    desc: "Prisma 管理",
-  },
-
   {
     group: "生产",
     label: "start",

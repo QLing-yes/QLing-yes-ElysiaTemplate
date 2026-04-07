@@ -6,7 +6,16 @@
 - 目标：先实现一整套前后端分离模板 为日后AI生成代码打下基础。
 - 打算将Drizzle作为默认的ORM工具，Prisma作为可选的。
 
+## 通过cli创建项目
+```bash
+bun create app-elysia@latest
+```
+- 当然也可以下载本仓库直接使用。
+
 ## 项目结构
+
+注意：
+- Prisma 相关文件仅在通过 CLI 选择此模板时生成。
 
 ```
 Project/
@@ -16,7 +25,7 @@ Project/
 │   │   └── index.ts          # 全局模块入口 (已注册到全局“$g”建议控制器中使用，其他位置建议手动导入)
 │   │   └── schemas.ts        # 数据模型 (自动使用elysia.model注册)
 │   │   └── schemaDerive.ts   # 数据模型的派生类型和方法
-│   ├── controller/           # 控制器层 (`ctrl.ts` 结尾的文件将自动加载)
+│   ├── controller/           # 控制器层 (自动加载`ctrl.ts` 结尾的文件, 改变时自动更新路由)
 │   ├── lib/
 │   │   ├── error.ts          # 全局错误与进程事件捕获处理
 │   │   ├── logger.ts         # 日志库
@@ -52,7 +61,6 @@ bun i
 bun run generate
 bun run dev
 ```
-- 注意新增或删除控制器文件后，需要重新运行 `bun run script_generate` 来更新路由。
 
 ## 命令
 

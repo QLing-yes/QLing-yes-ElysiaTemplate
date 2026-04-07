@@ -1,5 +1,4 @@
 import { t } from "elysia";
-import { UserPlain } from "@/support/generated/prismabox/User";
 
 export default $g.ctrl((app) =>
   app
@@ -37,33 +36,4 @@ export default $g.ctrl((app) =>
       },
       { res: t.String() },
     )
-    .put(
-      "/create",
-      async ({ body }) => {
-        const res = await $g.prisma.user.create({
-          data: body,
-        });
-        return $g.success(res);
-      },
-      {
-        body: "UserPlainInputCreate",
-        res: UserPlain,
-      },
-    )
-    .get(
-      "/id/:id",
-      async ({ params: { id }, status }) => {
-        const user = await $g.prisma.user.findUnique({
-          where: { id: Number(id) },
-        });
-        if (!user) return status(404, "User not found");
-        return $g.success(user);
-      },
-      {
-        response: {
-          200: $g.ResSchemaFun(UserPlain),
-          404: t.String(),
-        },
-      },
-    ),
 );

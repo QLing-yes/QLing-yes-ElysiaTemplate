@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "menu": "bun run ./support/script/menu.ts",
-    "dev-parallel": "bun run --parallel --filter './' script_generate dev",
+    "dev-parallel": "bun --parallel run script_generate dev",
     "dev": "bun run --watch ./app/cluster.ts",
     "fix": "bunx --bun @biomejs/biome check --write .",
-    "generate": "bun run --parallel --filter './' script_generate prisma_generate",
+    "generate": "bun --parallel run script_generate prisma_generate",
     "script_generate": "bun ./support/script/index.ts",
     "prisma_generate": "bun --bun run prisma generate"
   },

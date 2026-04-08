@@ -1,6 +1,6 @@
 {
   // 🔧 引用 Biome 的 JSON Schema，用于编辑器的智能提示和配置文件格式验证
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
   // 📦 版本控制系统（VCS）集成配置
   "vcs": {
     "enabled": true, // 开启 VCS 集成（与 Git 等版本工具联动）

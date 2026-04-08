@@ -35,5 +35,5 @@ export default $g.ctrl((app) =>
         return $g.success(result);
       },
       { res: t.String() },
-    )
+    ),
 );

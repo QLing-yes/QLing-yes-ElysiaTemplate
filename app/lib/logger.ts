@@ -294,7 +294,7 @@ export class Logger {
     if (!this.sync) {
       const interval = options.flushInterval ?? 1000;
       this.timer = setInterval(() => {
-        this.flush().catch(() => { });
+        this.flush().catch(() => {});
       }, interval);
       this.timer.unref();
     }
@@ -401,11 +401,7 @@ export class Logger {
    * @param msg   消息文本
    * @param meta  附加元数据
    */
-  private write(
-    level: LogLevel,
-    msg: string,
-    meta?: Meta,
-  ): void {
+  private write(level: LogLevel, msg: string, meta?: Meta): void {
     if (LEVEL_RANK[level] < this.minLevel) return;
     if (this.closed) return;
 
@@ -436,7 +432,8 @@ export class Logger {
    * @returns 规范化后的元数据
    */
   private sanitizeMeta(meta?: Meta) {
-    if (meta instanceof Error) return { name: meta.name, msg: meta.message, stack: meta.stack };
+    if (meta instanceof Error)
+      return { name: meta.name, msg: meta.message, stack: meta.stack };
     return meta;
   }
 

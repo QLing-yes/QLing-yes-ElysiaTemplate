@@ -25,8 +25,14 @@ type Cmd = { label: string; cmd: string; desc: string; group?: string };
 const list: Cmd[] = [
   {
     group: "开发",
+    label: "dev-parallel",
+    cmd: `bun run dev-parallel`,
+    desc: "开发模式启动、自动生成路由",
+  },
+  {
+    group: "开发",
     label: "dev",
-    cmd: `bun run generate && bun run --watch ${main}`,
+    cmd: `bun run dev`,
     desc: "开发模式启动",
   },
   {

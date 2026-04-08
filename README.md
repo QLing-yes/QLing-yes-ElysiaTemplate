@@ -57,13 +57,14 @@ Project/
 
 ```bash
 bun i
-bun run dev
+bun run dev-parallel
 ```
 
 ## 命令
 
 ```bash
 bun run menu    # 启动命令菜单
+bun run dev-parallel     # 启动开发服务器、自动生成路由
 bun run dev     # 启动开发服务器
 bun run fix     # 修复代码风格
 bun run generate  # 生成路由和prisma

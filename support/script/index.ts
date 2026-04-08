@@ -1,6 +1,8 @@
 import { watchDir } from "@/app/utils/watch";
 import autoRoutes from "./routes";
 
+generateRoutes();
+
 watchDir({
   dir: "app/controller",
   suffix: ["ctrl.ts"],
@@ -8,8 +10,6 @@ watchDir({
     generateRoutes();
   },
 });
-
-generateRoutes();
 
 function generateRoutes() {
   autoRoutes({

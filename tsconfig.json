@@ -37,8 +37,8 @@
     "allowSyntheticDefaultImports": true, // 允许无默认导出的模块使用默认导入语法
     "allowImportingTsExtensions": true, // 允许导入时显式写 .ts 扩展名（符合 ESM 规范）
     "verbatimModuleSyntax": true, // 严格模块语法：类型导入必须用 import type
-    "experimentalDecorators": true, // 实验版装饰器
-    "emitDecoratorMetadata": true, // 实验版装饰器元数据
+    // "experimentalDecorators": true, // 实验版装饰器
+    // "emitDecoratorMetadata": true, // 实验版装饰器元数据
     // "decorators": true, // 最新官方标准装饰器
     // --- 路径别名（简化深层导入）---
     "baseUrl": ".",
@@ -55,6 +55,9 @@
   // ==========================================
   // 📂 【文件扫描范围】（性能关键）
   // ==========================================
-  // "include": ["./**/*"],
+  "include": [
+    "**/*.ts",
+    "./.template/**/*.ts" // 方便写cli可选模板
+  ],
   "exclude": ["node_modules", "dist", ".git"]
 }

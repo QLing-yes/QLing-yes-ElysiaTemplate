@@ -1,10 +1,9 @@
-import { logger } from "@/app/lib/logger";
+export { logger } from "@/app/lib/logger";
+export { redis } from "@/app/lib/redis";
+export { ResSchemaFun } from "./schemaDerive";
 
-import redis from "@/app/lib/redis";
 import type routes from "@/app/plugins/routes.plug.ts";
-import { ResSchemaFun, type ResType } from "./schemaDerive";
-
-export { logger, ResSchemaFun, redis };
+import type { ResType } from "./schemaDerive";
 
 /** 控制器工厂 */
 export const ctrl = <T>(fun: (app: typeof routes) => T) => fun;

@@ -1,20 +1,16 @@
 [English](./README-en.md) | [中文](./README.md)
 
 ## 非正式版本
-
 - 全自动路由、日志系统、端到端类型安全，更多即将到来。
-- 目标：先实现一整套前后端分离模板 为日后AI生成代码打下基础。
-- 打算将Drizzle作为默认的ORM工具，Prisma作为可选的。
 
 ## 通过cli创建项目
 ```bash
-bun create app-elysia@latest // 先别用还在写😅
+bun create app-elysia@latest
 ```
 - 当然也可以下载本仓库直接使用。
 
 ## 项目结构
-
-> ⚠️ **注意**：Prisma 相关文件仅在通过 CLI 选择此模板时生成。
+> ⚠️ **注意**：Prisma、Drizzle 相关文件仅在通过CLI选择对应模板时生成。
 
 ```
 Project/
@@ -64,8 +60,8 @@ bun run dev-parallel
 
 ```bash
 bun run menu    # 启动命令菜单
-bun run dev-parallel     # 启动开发服务器、自动生成路由
-bun run dev     # 启动开发服务器
+bun run dev     # 启动开发服务器、自动生成路由
+bun run dev-watch # 启动开发服务器
 bun run fix     # 修复代码风格
 bun run generate  # 生成路由和prisma
 bun run script_generate  # 生成路由（一般不需要手动执行）
@@ -86,6 +82,9 @@ export type LogLevel = "debug" | "info" | "warn" | "error";
 
 /** 文件轮转粒度 */
 export type RotateBy = "hour" | "day" | "month";
+
+/** 日志元数据类型 */
+export type Meta = Record<string, unknown> | Error | undefined | null;
 
 /** Logger 构造选项 */
 export interface LoggerOptions {
@@ -108,6 +107,8 @@ export interface LoggerOptions {
   maxFiles?: number;
   /** 同步写入模式，默认 `false` */
   sync?: boolean;
+  /** 格式化元数据的缩进空格数，默认 `1` */
+  formatted?: number;
 }
 ```
 

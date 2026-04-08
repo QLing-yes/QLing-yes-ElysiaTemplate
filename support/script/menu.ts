@@ -23,43 +23,6 @@ const build = (target: string, mode: BuildMode = "release") => {
 type Cmd = { label: string; cmd: string; desc: string; group?: string };
 /** @type 命令列表 */
 const list: Cmd[] = [
-  {
-    group: "开发",
-    label: "dev-parallel",
-    cmd: `bun run dev-parallel`,
-    desc: "开发模式启动、自动生成路由",
-  },
-  {
-    group: "开发",
-    label: "dev",
-    cmd: `bun run dev`,
-    desc: "开发模式启动",
-  },
-  {
-    group: "开发",
-    label: "fix",
-    cmd: "bunx --bun @biomejs/biome check --write .",
-    desc: "自动修复代码",
-  },
-  {
-    group: "开发",
-    label: "generate",
-    cmd: "bun ./support/script/index.ts",
-    desc: "生成 路由",
-  },
-  {
-    group: "生产",
-    label: "start",
-    cmd: `NODE_ENV=production bun ${main}`,
-    desc: "生产启动",
-  },
-  {
-    group: "生产",
-    label: "start-hot",
-    cmd: `bun run generate && NODE_ENV=production bun --hot ${main}`,
-    desc: "热更新启动",
-  },
-
   { group: "构建 - Bun", label: "bun", cmd: build("bun"), desc: "Bun 原生" },
 
   {

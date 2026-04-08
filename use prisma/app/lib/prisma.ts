@@ -11,7 +11,7 @@ const adapter = new PrismaMariaDb({
   connectionLimit: 5,
 });
 /** prisma客户端 */
-const prisma = new PrismaClient({ adapter });
+export const prisma = new PrismaClient({ adapter });
 
 async function isAlive() {
   try {

@@ -1,29 +1,30 @@
 [English](./README-en.md) | [中文](./README.md)
 
-## 非正式版本
-- 全自动路由、日志系统、端到端类型安全，更多即将到来。
+## 预发布版本
+- `1.0.0` 版本起即为正式版。
 
-## 通过cli创建项目
+## 使用 CLI 创建项目
 ```bash
 bun create app-elysia@latest
 ```
-- 当然也可以下载本仓库直接使用。
+- 当然，你也可以直接下载本仓库使用。
 
 ## 项目结构
-> ⚠️ **注意**：Prisma、Drizzle 相关文件仅在通过CLI选择对应模板时生成。
+> ⚠️ **注意**：Prisma、Drizzle 相关文件仅在通过 CLI 选择对应模板时生成。
+- 全自动路由、日志系统、端到端类型安全，更多功能即将推出。
 
 ```
 Project/
 ├── public/                   # 静态资源（自动路由静态资源）
 ├── app/
 │   ├── common/
-│   │   └── index.ts          # 全局模块入口 (已注册到全局“$g”建议控制器中使用，其他位置建议手动导入)
+│   │   └── index.ts          # 全局模块入口 (已注册到全局“$g”建议`controller`中使用，其他位置建议手动导入)
 │   │   └── schemas.ts        # 数据模型 (自动使用elysia.model注册)
 │   │   └── schemaDerive.ts   # 数据模型的派生类型和方法
 │   ├── controller/           # 控制器层 (自动加载`ctrl.ts`结尾的文件,改变时自动更新路由)
 │   ├── lib/
-│   │   ├── error.ts          # 全局错误与进程事件捕获处理
-│   │   ├── logger.ts         # 日志库
+│   │   ├── error.ts          # 全局错误与进程事件捕获处理 (默认同步模式)
+│   │   ├── logger.ts         # 日志库 (默认异步模式)
 │   │   ├── prisma.ts         # Prisma 客户端
 │   │   └── redis.ts          # Redis 客户端
 │   ├── plugins/
@@ -57,25 +58,28 @@ bun run dev-parallel
 ```
 
 ## 命令
-
 ```bash
 bun run menu    # 启动命令菜单
 bun run dev     # 启动开发服务器、自动生成路由
 bun run dev-watch # 启动开发服务器
+bun run start-hot # 以正式环境启动，支持热更新
+bun run start-hot-bg # 以正式环境启动，支持热更新，关闭终端不终止进程
 bun run fix     # 修复代码风格
-bun run generate  # 生成路由和prisma
+bun run generate  # 生成路由和prisma定义
 bun run script_generate  # 生成路由（一般不需要手动执行）
-bun run prisma_generate  # 生成prisma
+bun run prisma_generate  # 生成prisma定义
 ```
 
 ## 日志配置
-[logger.ts](app/lib/logger.ts)
+- 默认：[应用使用`同步`模式记录](app/lib/error.ts)，[控制器使用`异步`记录的方式](app/plugins/routes.plug.ts)。
+
 ```typescript
 import { Logger, logger } from "@/app/lib/logger";
-//const logger = new Logger({ level: "debug" });
-logger.info("msg");
+//const logger = new Logger({ sync: false, level: "debug" });
 logger.info("msg", { meta: "value" });
+logger.error("msg", Object | Error);
 ```
+[logger.ts](app/lib/logger.ts)
 ```typescript
 /** 日志级别 */
 export type LogLevel = "debug" | "info" | "warn" | "error";

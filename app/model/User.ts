@@ -1,11 +1,11 @@
-import { pgTable, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import { mysqlTable, serial, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema } from "drizzle-typebox";
 
-export const user = pgTable("user", {
+export const user = mysqlTable("user", {
   id: serial("id").primaryKey(),
-  username: varchar("username").notNull().unique(),
-  password: varchar("password").notNull(),
-  email: varchar("email").notNull().unique(),
+  username: varchar("username", { length: 255 }).notNull().unique(),
+  password: varchar("password", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
   salt: varchar("salt", { length: 64 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

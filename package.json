@@ -3,11 +3,11 @@
   "version": "0.0.44",
   "type": "module",
   "scripts": {
-    "menu": "bun ./support/script/menu.ts",
     "dev": "bun --parallel run generate_script dev-watch",
     "dev-watch": "bun --watch ./app/cluster.ts",
     "start-hot": "NODE_ENV=production bun --hot ./app/cluster.ts",
     "start-hot-bg": "NODE_ENV=production bun --hot --background ./app/cluster.ts",
+    "menu": "bun ./support/script/menu.ts",
     "fix": "bunx --bun @biomejs/biome check --write .",
     "generate": "bun --parallel 'generate_*'",
     "generate_script": "bun ./support/script/index.ts"
@@ -18,10 +18,12 @@
     "@elysiajs/static": "1.4.7",
     "drizzle-orm": "0.45.2",
     "drizzle-typebox": "0.3.3",
-    "elysia": "1.4.28"
+    "elysia": "1.4.28",
+    "mysql2": "3.21.1"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.10",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "drizzle-kit": "0.31.10"
   }
 }

@@ -1,9 +1,9 @@
-import { defineConfig } from "drizzle-kit";
+import { type Config, defineConfig } from "drizzle-kit";
 
 export default defineConfig({
   schema: ["./app/model"],
   out: "./drizzle",
-  dialect: "mysql",
+  dialect: process.env.DATABASE_TYPE as Config["dialect"],
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },

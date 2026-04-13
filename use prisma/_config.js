@@ -7,7 +7,7 @@ import path from 'node:path';
 export default function ({ projectDir }) {
   try {
     // ---------- package.json ----------
-    const pkgPath = path.join(projectDir, 'package.json');    
+    const pkgPath = path.join(projectDir, 'package.json');
     /** @type {{ dependencies?: Record<string, string>, devDependencies?: Record<string, string> }} */
     const pkg = JSON.parse(readFileSync(pkgPath, 'utf8'));
 
@@ -17,13 +17,13 @@ export default function ({ projectDir }) {
     };
     pkg.dependencies = {
       ...pkg.dependencies,
-      'prismabox': '1.1.26',
-      '@prisma/adapter-mariadb': '7.6.0',
-      '@prisma/client': '7.6.0',
+      "prismabox": "1.1.26",
+      "@prisma/adapter-mariadb": "7.7.0",
+      "@prisma/client": "7.7.0"
     };
     pkg.devDependencies = {
       ...pkg.devDependencies,
-      'prisma': '7.6.0',
+      "prisma": "7.7.0"
     };
 
     writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), 'utf8');
@@ -31,7 +31,7 @@ export default function ({ projectDir }) {
     // ---------- app/common/index.ts ----------
     const commonFilePath = path.join(projectDir, 'app/common/index.ts');
     const commonContent = readFileSync(commonFilePath, 'utf8');
-    
+
     const exportLine = 'export { prisma } from "@/app/lib/prisma";\n';
     writeFileSync(commonFilePath, exportLine + commonContent, 'utf8');
   } catch (err) {

@@ -3,27 +3,21 @@
 ## 预发布版本
 - `1.0.0` 版本起即为正式版。
 
-## 使用 CLI 创建项目
-```bash
-bun create app-elysia@latest
-```
-- 当然，你也可以直接下载本仓库使用。
-
 ## 项目结构
 > ⚠️ **注意**：Prisma、Drizzle 相关文件仅在通过 CLI 选择对应模板时生成。
 - 全自动路由、日志系统、端到端类型安全，更多功能即将推出。
 
 ```
 Project/
-├── public/                   # 静态资源（自动路由静态资源）
+├── public/                   # 静态资源（自动路由）
 ├── app/
 │   ├── common/
-│   │   └── index.ts          # 全局模块入口 (已注册到全局“$g”建议`controller`中使用，其他位置建议手动导入)
+│   │   └── index.ts          # 全局模块 (注册到全局"$g", 仅`controller`中使用)
 │   │   └── schemas.ts        # 数据模型 (自动使用elysia.model注册)
 │   │   └── schemaDerive.ts   # 数据模型的派生类型和方法
 │   ├── controller/           # 控制器层 (自动加载`ctrl.ts`结尾的文件,改变时自动更新路由)
 │   ├── lib/
-│   │   ├── error.ts          # 全局错误与进程事件捕获处理 (默认同步模式)
+│   │   ├── error.ts          # 全局错误与进程事件捕获记录 (同步模式)
 │   │   ├── logger.ts         # 日志库 (默认异步模式)
 │   │   ├── prisma.ts         # Prisma 客户端
 │   │   └── redis.ts          # Redis 客户端
@@ -50,6 +44,20 @@ Project/
 ...
 ```
 
+## 使用 CLI 创建项目
+
+```bash
+bun create app-elysia@latest
+```
+- 当然，你也可以直接下载本仓库使用。
+
+### 选择 Prisma 模板后，请按以下步骤进行配置：
+
+1. **检查数据库配置** — 确认 [.env](.env) 中的数据库连接信息是否正确
+2. **确认数据模型** — 检查 [schema.prisma](prisma/schema.prisma) 中的模型定义是否符合需求
+3. **初始化数据库**（新数据库时执行）— 运行 `bunx --bun prisma migrate dev --name init` 创建初始迁移
+4. **生成客户端** — 执行 `bun run generate_prisma` 生成 Prisma Client
+
 ## 快速开始
 
 ```bash
@@ -66,8 +74,8 @@ bun run start-hot # 以正式环境启动，支持热更新
 bun run start-hot-bg # 以正式环境启动，支持热更新，关闭终端不终止进程
 bun run fix     # 修复代码风格
 bun run generate  # 生成路由和prisma定义
-bun run script_generate  # 生成路由（一般不需要手动执行）
-bun run prisma_generate  # 生成prisma定义
+bun run generate_script  # 生成路由（一般不需要手动执行）
+bun run generate_prisma  # 生成prisma客户端
 ```
 
 ## 日志配置
@@ -126,7 +134,7 @@ bunx skills add elysiajs/skills
 - [llms-full](https://elysiajs.com/llms-full.txt)
 
 ## MCP推荐
-```
+```json
 {
   "mcpServers": {
     // 任何GitHub项目转变为文档中心

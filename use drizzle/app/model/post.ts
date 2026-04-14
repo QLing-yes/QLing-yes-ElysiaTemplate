@@ -1,4 +1,5 @@
 import { relations } from "drizzle-orm";
+import { createInsertSchema } from 'drizzle-typebox'
 import {
   boolean,
   int,
@@ -23,3 +24,5 @@ export const tableRelations = relations(table, ({ one }) => ({
     references: [user.id],
   }),
 }));
+
+export const schema = createInsertSchema(table)

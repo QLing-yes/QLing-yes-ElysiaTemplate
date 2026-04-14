@@ -13,10 +13,10 @@ export default function ({ projectDir }) {
 
         pkg.scripts = {
             ...pkg.scripts,
-            "generate_drizzle": "drizzle-kit generate",
-            "drizzle_migrate": "drizzle-kit migrate",
-            "drizzle_push": "drizzle-kit push",
-            "drizzle_studio": "drizzle-kit studio"
+            "generate_drizzle": "bun --bun run drizzle-kit generate",
+            "drizzle_migrate": "bun --bun run drizzle-kit migrate",
+            "drizzle_push": "bun --bun run drizzle-kit push",
+            "drizzle_studio": "bun --bun run drizzle-kit studio"
         };
         pkg.dependencies = {
             ...pkg.dependencies,

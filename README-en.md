@@ -51,6 +51,12 @@ bun create app-elysia@latest
 ```
 - Of course, you can also directly download and use this repository.
 
+### After Selecting Drizzle Template, Please Configure Following These Steps:
+
+1. **Check Database Configuration** — Verify the database connection information in [.env](.env) is correct
+2. **Verify Data Models** — Check if the model definitions in [app/model](app/model) meet your requirements
+3. **Sync to Database** — Run `bun run generate_drizzle` + `bun run drizzle_migrate`
+
 ### After Selecting Prisma Template, Please Configure Following These Steps:
 
 1. **Check Database Configuration** — Verify the database connection information in [.env](.env) is correct
@@ -62,7 +68,7 @@ bun create app-elysia@latest
 
 ```bash
 bun i
-bun run dev-parallel
+bun run dev
 ```
 
 ## Commands
@@ -73,9 +79,16 @@ bun run dev-watch # Start development server
 bun run start-hot # Start in production environment with hot reload support
 bun run start-hot-bg # Start in production environment with hot reload support, process continues when terminal closes
 bun run fix     # Fix code style
-bun run generate  # Generate routes and prisma definitions
+
+bun run generate  # Generate routes, prisma client, drizzle migration data
 bun run generate_script  # Generate routes (generally no need to manually execute)
-bun run generate_prisma  # Generate prisma client
+
+bun run generate_drizzle  # Generate Drizzle migration data
+bun run drizzle_migrate  # Execute migration
+bun run drizzle_push  # Sync database
+bun run drizzle_studio  # Database visualization tool
+
+bun run generate_prisma  # Generate Prisma client
 ```
 
 ## Logging Configuration

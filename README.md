@@ -51,6 +51,12 @@ bun create app-elysia@latest
 ```
 - 当然，你也可以直接下载本仓库使用。
 
+### 选择 Drizzle 模板后，请按以下步骤进行配置：
+
+1. **检查数据库配置** — 确认 [.env](.env) 中的数据库连接信息是否正确
+2. **确认数据模型** — 检查 [app/model](app/model) 中的模型定义是否符合需求
+3. **同步到数据库** — 运行 `bun run generate_drizzle` + `bun run drizzle_migrate`
+
 ### 选择 Prisma 模板后，请按以下步骤进行配置：
 
 1. **检查数据库配置** — 确认 [.env](.env) 中的数据库连接信息是否正确
@@ -62,7 +68,7 @@ bun create app-elysia@latest
 
 ```bash
 bun i
-bun run dev-parallel
+bun run dev
 ```
 
 ## 命令
@@ -73,8 +79,15 @@ bun run dev-watch # 启动开发服务器
 bun run start-hot # 以正式环境启动，支持热更新
 bun run start-hot-bg # 以正式环境启动，支持热更新，关闭终端不终止进程
 bun run fix     # 修复代码风格
-bun run generate  # 生成路由和prisma定义
+
+bun run generate  # 生成 路由、prisma客户端、drizzle迁移数据
 bun run generate_script  # 生成路由（一般不需要手动执行）
+
+bun run generate_drizzle  # 生成Drizzle迁移数据
+bun run drizzle_migrate  # 执行迁移
+bun run drizzle_push  # 数据库同步
+bun run drizzle_studio  # 数据库可视化工具
+
 bun run generate_prisma  # 生成prisma客户端
 ```
 

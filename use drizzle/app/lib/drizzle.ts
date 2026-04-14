@@ -1,4 +1,4 @@
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle as orm } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import { logger } from "@/app/lib/logger";
 import { table as post, tableRelations as postRelations } from "../model/post";
@@ -10,30 +10,27 @@ const pool = mysql.createPool({
   connectionLimit: 10,
 });
 registerEvent();
-export const db = drizzle(pool, {
+export const drizzle = orm(pool, {
   schema: { post, postRelations, user, userRelations },
   mode: "default",
 });
-export type Db = typeof db;
+export default drizzle;
 
 function registerEvent() {
   pool.pool.on("error", (err: Error) => {
     logger.error("[drizzle] error", err);
   });
-  pool.on("connection", (conn) => {
-    logger.info(`[drizzle] 新连接建立 threadId=${conn.threadId}`);
-  });
   pool.on("enqueue", () => {
-    logger.warn("[drizzle] 连接池已满，请求排队等待");
+    logger.warn("[drizzle] connection pool is full");
   });
   // 启动时验证连接是否正常
   pool
     .getConnection()
     .then((conn) => {
-      logger.info("[drizzle] 数据库连接成功");
+      logger.info("[drizzle] connected successfully");
       conn.release();
     })
     .catch((err) => {
-      logger.error("[drizzle] 数据库连接失败", err.message);
+      logger.error(`[drizzle] connection failed:${err}`);
     });
 }

@@ -35,7 +35,7 @@ export default function ({ projectDir }) {
         const commonFilePath = path.join(projectDir, 'app/common/index.ts');
         const commonContent = readFileSync(commonFilePath, 'utf8');
 
-        const exportLine = 'export { prisma } from "@/app/lib/prisma";\n';
+        const exportLine = 'export { drizzle as db } from "@/app/lib/drizzle";\n';
         writeFileSync(commonFilePath, exportLine + commonContent, 'utf8');
     } catch (err) {
         console.warn(`_config.js 执行失败: ${/** @type {Error} */(err).message}`);

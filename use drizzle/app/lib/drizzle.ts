@@ -20,20 +20,17 @@ function registerEvent() {
   pool.pool.on("error", (err: Error) => {
     logger.error("[drizzle] error", err);
   });
-  pool.on("connection", (conn) => {
-    logger.info(`[drizzle] 新连接建立 threadId=${conn.threadId}`);
-  });
   pool.on("enqueue", () => {
-    logger.warn("[drizzle] 连接池已满，请求排队等待");
+    logger.warn("[drizzle] connection pool is full");
   });
   // 启动时验证连接是否正常
   pool
     .getConnection()
     .then((conn) => {
-      logger.info("[drizzle] 数据库连接成功");
+      logger.info("[drizzle] connected successfully");
       conn.release();
     })
     .catch((err) => {
-      logger.error("[drizzle] 数据库连接失败", err.message);
+      logger.error(`[drizzle] connection failed:${err}`);
     });
 }

@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
-import { createInsertSchema } from 'drizzle-typebox'
 import { mysqlTable, serial, varchar } from "drizzle-orm/mysql-core";
+import { createInsertSchema } from "drizzle-typebox";
 import { table as post } from "./post";
 
 export const table = mysqlTable("user", {
@@ -13,4 +13,4 @@ export const tableRelations = relations(table, ({ many }) => ({
   posts: many(post),
 }));
 
-export const schema = createInsertSchema(table)
+export const schema = createInsertSchema(table);

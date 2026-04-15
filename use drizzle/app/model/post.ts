@@ -1,5 +1,4 @@
 import { relations } from "drizzle-orm";
-import { createInsertSchema } from 'drizzle-typebox'
 import {
   boolean,
   int,
@@ -8,6 +7,7 @@ import {
   text,
   varchar,
 } from "drizzle-orm/mysql-core";
+import { createInsertSchema } from "drizzle-typebox";
 import { table as user } from "./user";
 
 export const table = mysqlTable("post", {
@@ -25,4 +25,4 @@ export const tableRelations = relations(table, ({ one }) => ({
   }),
 }));
 
-export const schema = createInsertSchema(table)
+export const schema = createInsertSchema(table);

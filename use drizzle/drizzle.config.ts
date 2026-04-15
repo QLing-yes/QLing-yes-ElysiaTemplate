@@ -5,7 +5,7 @@ const DATABASE_URL = process.env.DATABASE_URL!;
 
 export default defineConfig({
   schema: "./app/model/",
-  out: `./drizzle/`,
+  out: `./support/generated/drizzle/`,
   dialect: DATABASE_TYPE as Config["dialect"],
   dbCredentials: { url: DATABASE_URL },
 });

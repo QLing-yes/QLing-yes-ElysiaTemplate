@@ -1,7 +1,9 @@
 /**
- * 通用交互式菜单引擎
+ * 通用交互式菜单引擎（Node.js）
  * ↑↓ / Home / End 选择，Enter 进入/执行，ESC / ← 返回，Ctrl+C 退出
  */
+
+import { spawn } from "node:child_process";
 
 export type MenuItem = {
   name: string;
@@ -25,24 +27,27 @@ const waitKey = () =>
       resolve();
     });
   });
+
 export async function execCmd(cmd: string) {
   const WIN = process.platform === "win32";
   const SEP = "─".repeat(40);
-  const spawnCmd = WIN ? parseCmd(cmd) : ["sh", "-c", cmd];
-  console.log(`\n\x1b[1;35m执行:\x1b[0m ${spawnCmd[2]}\n\x1b[2m${SEP}\x1b[0m`);
+  const [file, args] = WIN ? parseCmd(cmd) : ["sh", ["-c", cmd]];
 
-  const p = Bun.spawn(spawnCmd, {
-    stdout: "inherit",
-    stderr: "inherit",
+  console.log(`\n\x1b[1;35m执行:\x1b[0m ${args[1]}\n\x1b[2m${SEP}\x1b[0m`);
+
+  await new Promise<void>((resolve, reject) => {
+    const p = spawn(file, args, { stdio: "inherit" });
+    p.on("close", resolve);
+    p.on("error", reject);
   });
-  await p.exited;
+
   console.log(`\x1b[2m${SEP}\x1b[0m`);
 }
 
-function parseCmd(cmd: string): string[] {
+function parseCmd(cmd: string): [string, string[]] {
   const envPattern = /^[A-Za-z_][A-Za-z0-9_]*=.*?(?=\s+[A-Za-z_]|$)/g;
   const envs = cmd.match(envPattern) || [];
-  if (envs.length === 0) return ["cmd", "/c", cmd];
+  if (envs.length === 0) return ["cmd", ["/c", cmd]];
 
   const actualCmd = cmd.slice(envs.join(" ").length).trim();
   const setCmd = envs
@@ -52,7 +57,7 @@ function parseCmd(cmd: string): string[] {
     })
     .join("&&");
 
-  return ["cmd", "/c", `${setCmd}&&${actualCmd}`];
+  return ["cmd", ["/c", `${setCmd}&&${actualCmd}`]];
 }
 
 // ── 渲染 ─────────────────────────────────────────────────────
@@ -74,7 +79,7 @@ function render(items: MenuItem[], sel: number, breadcrumb: string[]) {
   s +=
     "\x1b[38;5;45m╭──────────────────────────────────────────────────╮\x1b[0m\n";
   s +=
-    "\x1b[38;5;45m│\x1b[0m        \x1b[1;36m🚀 Bun 命令菜单    \x1b[0m                       \x1b[38;5;45m│\x1b[0m\n";
+    "\x1b[38;5;45m│\x1b[0m        \x1b[1;36m🚀 命令菜单    \x1b[0m                          \x1b[38;5;45m│\x1b[0m\n";
   s +=
     "\x1b[38;5;45m╰──────────────────────────────────────────────────╯\x1b[0m\n";
   s += isSubMenu
@@ -200,4 +205,42 @@ export function resolveArgs(
   }
 
   return item ? { item, breadcrumb } : null;
+}
+
+/** CLI 入口封装：解析 argv 并执行对应菜单项 */
+export async function entry(
+  menuItems: MenuItem[],
+): Promise<void> {
+  const args = process.argv.slice(2);
+
+  if (args[0] === "--list" || args[0] === "-l") {
+    console.log("\n\x1b[1;36m可用项目：\x1b[0m\n");
+    let lastGroup = "";
+    for (const { path, item } of collectLeaves(menuItems)) {
+      const group = path.slice(0, -1).join(" › ");
+      if (group !== lastGroup) {
+        console.log(orange(`  ${group}`));
+        lastGroup = group;
+      }
+      console.log(
+        `    \x1b[2m·\x1b[0m ${item.name}  \x1b[90m${item.remark ?? ""}\x1b[0m`,
+      );
+    }
+    console.log();
+    return process.exit(0) as never;
+  }
+
+  if (args.length > 0) {
+    const result = resolveArgs(menuItems, args);
+    if (!result) {
+      console.error(`\n\x1b[31m未找到：\x1b[0m "${args.join(" › ")}"\n`);
+      console.error(`运行 \x1b[1mbun menu.ts --list\x1b[0m 查看所有可用项目\n`);
+      return process.exit(1) as never;
+    }
+    const { item, breadcrumb } = result;
+    if (item.fun) await item.fun();
+    else if (item.children) await navigate(item.children, breadcrumb);
+  } else {
+    await navigate(menuItems);
+  }
 }

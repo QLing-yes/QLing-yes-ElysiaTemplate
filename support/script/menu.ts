@@ -1,6 +1,4 @@
 /**
- * Bun 构建命令菜单
- *
  * 用法：
  *   bun menu.ts                  交互式菜单
  *   bun menu.ts <名称>           直接执行或进入匹配项（模糊匹配，忽略大小写）
@@ -9,12 +7,9 @@
  */
 
 import {
-  collectLeaves,
+  entry,
   execCmd,
   type MenuItem,
-  navigate,
-  orange,
-  resolveArgs,
 } from "@/app/utils/menu-ui.ts";
 
 const main = "./app/cluster.ts";
@@ -181,33 +176,4 @@ const menuItems: MenuItem[] = [
   },
 ];
 // ── 入口 ─────────────────────────────────────────────────────
-
-const args = process.argv.slice(2);
-
-if (args[0] === "--list" || args[0] === "-l") {
-  console.log("\n\x1b[1;36m可用项目：\x1b[0m\n");
-  let lastGroup = "";
-  for (const { path, item } of collectLeaves(menuItems)) {
-    const group = path.slice(0, -1).join(" › ");
-    if (group !== lastGroup) {
-      console.log(orange(`  ${group}`));
-      lastGroup = group;
-    }
-    console.log(
-      `    \x1b[2m·\x1b[0m ${item.name}  \x1b[90m${item.remark ?? ""}\x1b[0m`,
-    );
-  }
-  console.log();
-} else if (args.length > 0) {
-  const result = resolveArgs(menuItems, args);
-  if (!result) {
-    console.error(`\n\x1b[31m未找到：\x1b[0m "${args.join(" › ")}"\n`);
-    console.error(`运行 \x1b[1mbun menu.ts --list\x1b[0m 查看所有可用项目\n`);
-    process.exit(1);
-  }
-  const { item, breadcrumb } = result;
-  if (item.fun) await item.fun();
-  else if (item.children) await navigate(item.children, breadcrumb);
-} else {
-  await navigate(menuItems);
-}
+await entry(menuItems);

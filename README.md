@@ -1,11 +1,15 @@
 [English](./README-en.md) | [中文](./README.md)
 
 ## 预发布版本
+
 - `1.0.0` 版本起即为正式版。
 
 ## 项目结构
+
 > ⚠️ **注意**：Prisma、Drizzle 相关文件仅在通过 CLI 选择对应模板时生成。
+
 - 全自动路由、日志系统、ORM、端到端类型安全，更多功能即将推出。
+
 ```
 Project/
 ├── public/                   # 静态资源（自动路由）
@@ -48,6 +52,7 @@ Project/
 ```bash
 bun create app-elysia@latest
 ```
+
 - 当然，你也可以直接下载本仓库使用。
 
 ### 选择 Drizzle 模板后，请按以下步骤进行配置：
@@ -60,7 +65,7 @@ bun create app-elysia@latest
 
 1. **检查数据库配置** — 确认 [.env](.env) 中的数据库连接信息是否正确
 2. **确认数据模型** — 检查 [schema.prisma](prisma/schema.prisma) 中的模型定义是否符合需求
-3. **初始化数据库**（新数据库时执行）— 运行 `bunx --bun prisma migrate dev --name init` 创建初始迁移
+3. **同步到数据库**（新数据库时执行）— 运行 `bunx --bun prisma migrate dev --name init` 创建初始迁移
 4. **生成客户端** — 执行 `bun run generate_prisma` 生成 Prisma Client
 
 ## 快速开始
@@ -71,6 +76,7 @@ bun run dev
 ```
 
 ## 命令
+
 ```bash
 bun run menu    # 启动命令菜单
 bun run dev     # 启动开发服务器、自动生成路由
@@ -91,6 +97,7 @@ bun run generate_prisma  # 生成prisma客户端
 ```
 
 ## 日志配置
+
 - 默认：[应用使用`同步`模式记录](app/lib/error.ts)，[控制器使用`异步`记录的方式](app/plugins/routes.plug.ts)。
 
 ```typescript
@@ -99,7 +106,9 @@ import { Logger, logger } from "@/app/lib/logger";
 logger.info("msg", { meta: "value" });
 logger.error("msg", Object | Error);
 ```
+
 [logger.ts](app/lib/logger.ts)
+
 ```typescript
 /** 日志级别 */
 export type LogLevel = "debug" | "info" | "warn" | "error";
@@ -146,6 +155,7 @@ bunx skills add elysiajs/skills
 - [llms-full](https://elysiajs.com/llms-full.txt)
 
 ## MCP推荐
+
 ```json
 {
   "mcpServers": {
@@ -196,3 +206,4 @@ bunx skills add elysiajs/skills
   }
 }
 ```
+

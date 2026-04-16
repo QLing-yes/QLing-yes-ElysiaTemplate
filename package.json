@@ -3,11 +3,11 @@
   "version": "0.0.45",
   "type": "module",
   "scripts": {
+    "menu": "bun ./support/script/menu.ts",
     "dev": "bun --parallel run generate_script dev-watch",
     "dev-watch": "bun --watch ./app/cluster.ts",
     "start-hot": "NODE_ENV=production bun --hot ./app/cluster.ts",
     "start-hot-bg": "NODE_ENV=production bun --hot --background ./app/cluster.ts",
-    "menu": "bun ./support/script/menu.ts",
     "fix": "bunx --bun @biomejs/biome check --write .",
     "generate": "bun --parallel 'generate_*'",
     "generate_script": "bun ./support/script/index.ts"

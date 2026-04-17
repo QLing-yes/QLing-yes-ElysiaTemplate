@@ -66,7 +66,7 @@ bun create app-elysia@latest
 1. **检查数据库配置** — 确认 [.env](.env) 中的数据库连接信息是否正确
 2. **确认数据模型** — 检查 [schema.prisma](prisma/schema.prisma) 中的模型定义是否符合需求
 3. **同步到数据库**（新数据库时执行）— 运行 `bunx --bun prisma migrate dev --name init` 创建初始迁移
-4. **生成客户端** — 执行 `bun run generate_prisma` 生成 Prisma Client
+4. **生成客户端** — 执行 `bunx --bun prisma generate` 生成 Prisma Client
 
 ## 快速开始
 
@@ -78,23 +78,25 @@ bun run dev
 ## 命令
 
 ```bash
-bun run menu    # 启动命令菜单
+bun run menu    # 启动交互式菜单
 bun run dev     # 启动开发服务器、自动生成路由
 bun run dev-watch # 启动开发服务器
 bun run start-hot # 以正式环境启动，支持热更新
 bun run start-hot-bg # 以正式环境启动，支持热更新，关闭终端不终止进程
 bun run fix     # 修复代码风格
 
-bun run generate  # 生成 路由、prisma客户端、drizzle迁移数据
+bun run generate  # 运行全部`generate_`开头的命令
 bun run generate_script  # 生成路由（一般不需要手动执行）
 
-bun run generate_drizzle  # 生成Drizzle迁移数据
-bun run drizzle_migrate  # 执行迁移
-bun run drizzle_push  # 数据库同步
-bun run drizzle_studio  # 数据库可视化工具
+bun run drizzle_studio  # drizzle可视化
+bun run generate_drigrate_migrate # 生成迁移并执行
 
-bun run generate_prisma  # 生成prisma客户端
+bun run prisma_studio  # prisma可视化
+bun run generate_prisma_migrate_dev  # prisma开发：迁移 + 执行 + 生成客户端
+bun run prisma_generate_migrate_deploy  # prisma生产：执行迁移 + 生成客户端
 ```
+- `bun run menu --list` 列出所有选项
+- `bun run menu <父级> <子项> <...>` 支持按路径逐级定位执行
 
 ## 日志配置
 

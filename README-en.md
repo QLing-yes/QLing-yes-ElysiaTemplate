@@ -5,7 +5,7 @@
 
 ## Project Structure
 > ⚠️ **Note**: Prisma and Drizzle related files are only generated when you select the corresponding template via CLI.
-- Automatic routing, logging system, end-to-end type safety, and more features coming soon.
+- Automatic routing, logging system, ORM, end-to-end type safety, and more features coming soon.
 
 ```
 Project/
@@ -62,7 +62,7 @@ bun create app-elysia@latest
 1. **Check Database Configuration** — Verify the database connection information in [.env](.env) is correct
 2. **Verify Data Models** — Check if the model definitions in [schema.prisma](prisma/schema.prisma) meet your requirements
 3. **Initialize Database** (execute for new databases only) — Run `bunx --bun prisma migrate dev --name init` to create initial migration
-4. **Generate Client** — Execute `bun run generate_prisma` to generate Prisma Client
+4. **Generate Client** — Execute `bunx --bun prisma generate` to generate Prisma Client
 
 ## Quick Start
 
@@ -72,24 +72,27 @@ bun run dev
 ```
 
 ## Commands
+
 ```bash
-bun run menu    # Start command menu
+bun run menu    # Start interactive menu
 bun run dev     # Start development server, auto-generate routes
 bun run dev-watch # Start development server
 bun run start-hot # Start in production environment with hot reload support
 bun run start-hot-bg # Start in production environment with hot reload support, process continues when terminal closes
 bun run fix     # Fix code style
 
-bun run generate  # Generate routes, prisma client, drizzle migration data
+bun run generate  # Run all commands starting with `generate_`
 bun run generate_script  # Generate routes (generally no need to manually execute)
 
-bun run generate_drizzle  # Generate Drizzle migration data
-bun run drizzle_migrate  # Execute migration
-bun run drizzle_push  # Sync database
-bun run drizzle_studio  # Database visualization tool
+bun run drizzle_studio  # Drizzle visualization
+bun run generate_drigrate_migrate # Generate and execute migration
 
-bun run generate_prisma  # Generate Prisma client
+bun run prisma_studio  # Prisma visualization
+bun run generate_prisma_migrate_dev  # Prisma dev: migrate + execute + generate client
+bun run prisma_generate_migrate_deploy  # Prisma prod: execute migration + generate client
 ```
+- `bun run menu --list` list all options
+- `bun run menu <parent> <child> <...>` support hierarchical path execution
 
 ## Logging Configuration
 - Default: [Application uses `sync` mode for recording](app/lib/error.ts), [Controller uses `async` recording method](app/plugins/routes.plug.ts).
@@ -100,6 +103,7 @@ import { Logger, logger } from "@/app/lib/logger";
 logger.info("msg", { meta: "value" });
 logger.error("msg", Object | Error);
 ```
+
 [logger.ts](app/lib/logger.ts)
 ```typescript
 /** Log level */

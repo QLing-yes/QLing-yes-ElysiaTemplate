@@ -22,8 +22,10 @@ Project/
 │   ├── lib/
 │   │   ├── error.ts          # 全局错误与进程事件捕获记录 (同步模式)
 │   │   ├── logger.ts         # 日志库 (默认异步模式)
+│   │   ├── drizzle.ts        # Drizzle 客户端
 │   │   ├── prisma.ts         # Prisma 客户端
 │   │   └── redis.ts          # Redis 客户端
+│   ├── model/                # Drizzle 数据模型目录
 │   ├── plugins/
 │   │   ├── index.plug.ts     # 全局插件
 │   │   └── macro.plug.ts     # 宏插件
@@ -33,9 +35,7 @@ Project/
 │   └── cluster.ts            # 单机多进程集群模式入口
 │   └── index.ts              # 应用入口
 ├── logs/
-├── prisma/                   # Prisma ORM 配置目录
-│   ├── migrations/           # 数据库迁移文件目录
-│   │   └── migration.sql
+├── prisma/
 │   └── schema.prisma         # Prisma 数据模型
 ├── test/                     # Eden 测试目录
 ├── support/                  # 辅助脚本目录（无需关心）
@@ -44,6 +44,8 @@ Project/
 │       ├── menu.ts           # 命令菜单
 │       └── routes.ts         # 路由生成工具
 |── .env                      # 配置文件
+|── prisma.config.ts          # prisma 配置
+|── drizzle.config.ts         # drizzle 配置
 ...
 ```
 
@@ -80,7 +82,6 @@ bun run dev
 ```bash
 bun run menu    # 启动交互式菜单
 bun run dev     # 启动开发服务器、自动生成路由
-bun run dev-watch # 启动开发服务器
 bun run start-hot # 以正式环境启动，支持热更新
 bun run start-hot-bg # 以正式环境启动，支持热更新，关闭终端不终止进程
 bun run fix     # 修复代码风格

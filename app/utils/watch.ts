@@ -43,7 +43,7 @@ export function watchDir(options: WatchOptions): () => void {
     if (!matchSuffix(normalized, suffix)) return;
     if (timer) clearTimeout(timer);
     timer = setTimeout(() => {
-      console.log(event, filename);
+      // console.log(event, filename);
       onChange(path.join(dir, normalized));
     }, debounce);
   }

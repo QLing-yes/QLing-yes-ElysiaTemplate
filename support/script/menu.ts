@@ -107,7 +107,7 @@ const menuItems: MenuItem[] = [
   {
     name: "dev",
     remark: "开发模式",
-    fun: () => execCmd("bun --parallel run generate_script dev-watch"),
+    fun: () => execCmd("bun run dev"),
   },
   {
     name: "start",

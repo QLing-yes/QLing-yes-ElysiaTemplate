@@ -19,8 +19,10 @@ Project/
 │   ├── lib/
 │   │   ├── error.ts          # Global error and process event capture/recording (sync mode)
 │   │   ├── logger.ts         # Logging library (async mode by default)
+│   │   ├── drizzle.ts        # Drizzle client
 │   │   ├── prisma.ts         # Prisma client
 │   │   └── redis.ts          # Redis client
+│   ├── model/                # Drizzle data models directory
 │   ├── plugins/
 │   │   ├── index.plug.ts     # Global plugin
 │   │   └── macro.plug.ts     # Macro plugin
@@ -30,9 +32,7 @@ Project/
 │   └── cluster.ts            # Single-machine multi-process cluster mode entry
 │   └── index.ts              # Application entry point
 ├── logs/
-├── prisma/                   # Prisma ORM configuration directory
-│   ├── migrations/           # Database migration files directory
-│   │   └── migration.sql
+├── prisma/
 │   └── schema.prisma         # Prisma data models
 ├── test/                     # Eden test directory
 ├── support/                  # Support scripts directory (no need to worry about)
@@ -41,6 +41,8 @@ Project/
 │       ├── menu.ts           # Command menu
 │       └── routes.ts         # Route generation utility
 |── .env                      # Configuration file
+|── prisma.config.ts          # Prisma config
+|── drizzle.config.ts         # Drizzle config
 ...
 ```
 
@@ -76,7 +78,6 @@ bun run dev
 ```bash
 bun run menu    # Start interactive menu
 bun run dev     # Start development server, auto-generate routes
-bun run dev-watch # Start development server
 bun run start-hot # Start in production environment with hot reload support
 bun run start-hot-bg # Start in production environment with hot reload support, process continues when terminal closes
 bun run fix     # Fix code style

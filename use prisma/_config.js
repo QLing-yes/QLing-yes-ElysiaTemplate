@@ -13,7 +13,12 @@ export default function ({ projectDir }) {
 
     pkg.scripts = {
       ...pkg.scripts,
-      "generate_prisma": "bun --bun run prisma generate"
+      // 可视化
+      "prisma_studio": "bunx --bun prisma studio",
+      // 开发：迁移 + 执行 + 生成客户端
+      "generate_prisma_migrate_dev": "bunx --bun prisma migrate dev && bunx --bun prisma generate",
+      // 生产：执行迁移 + 生成客户端
+      "prisma_generate_migrate_deploy": "bunx --bun prisma migrate deploy && bunx --bun prisma generate",
     };
     pkg.dependencies = {
       ...pkg.dependencies,

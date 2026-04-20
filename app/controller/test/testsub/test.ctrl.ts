@@ -1,1 +1,1 @@
-export default (app: RouterType) => app.get("/test", () => "test");
+export default (app: Ctrl) => app.get("/test", () => "test");

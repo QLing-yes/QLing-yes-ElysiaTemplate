@@ -2,11 +2,11 @@ export { logger } from "@/app/lib/logger";
 export { redis } from "@/app/lib/redis";
 export { ResSchemaFun } from "./schemaDerive";
 
-import type routes from "@/app/plugins/routes.plug.ts";
+import type controller from "@/app/plugins/controller.plug";
 import type { ResType } from "./schemaDerive";
 
 /** 控制器工厂 */
-export const ctrl = <T>(fun: (app: typeof routes) => T) => fun;
+export const ctrl = <T>(fun: (app: typeof controller) => T) => fun;
 
 /** 成功响应 */
 export function success<T>(data: T, msg = ""): ResType<T> {

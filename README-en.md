@@ -26,7 +26,7 @@ Project/
 │   ├── plugins/
 │   │   ├── index.plug.ts     # Global plugin
 │   │   └── macro.plug.ts     # Macro plugin
-│   │   └── routes.plug.ts    # Routes plugin
+│   │   └── controller.plug.ts  # Controller plugin
 │   │   └── schemas.plug.ts   # Data model registration plugin
 │   ├── utils/                # Utility functions
 │   └── cluster.ts            # Single-machine multi-process cluster mode entry
@@ -96,7 +96,7 @@ bun run prisma_generate_migrate_deploy  # Prisma prod: execute migration + gener
 - `bun run menu <parent> <child> <...>` support hierarchical path execution
 
 ## Logging Configuration
-- Default: [Application uses `sync` mode for recording](app/lib/error.ts), [Controller uses `async` recording method](app/plugins/routes.plug.ts).
+- Default: [Application uses `sync` mode for recording](app/lib/error.ts), [Controller uses `async` recording method](app/plugins/controller.plug.ts).
 
 ```typescript
 import { Logger, logger } from "@/app/lib/logger";

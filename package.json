@@ -12,7 +12,7 @@
     "watch_dev": "bun --watch ./app/cluster.ts",
     "watch_generate_script": "bun ./support/script/index.ts watch",
     
-    "generate": "bun --nowatch --parallel 'generate_*'",
+    "generate": "bun --parallel 'generate_*'",
     "generate_script": "bun ./support/script/index.ts"
   },
   "dependencies": {

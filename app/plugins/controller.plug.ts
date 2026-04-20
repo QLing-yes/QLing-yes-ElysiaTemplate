@@ -4,7 +4,7 @@ import { logger } from "@/app/lib/logger";
 import plug_macro from "./macro.plug";
 import plug_schemas from "./schemas.plug";
 
-/** 路由插件 */
+/** 控制器插件 */
 export default new Elysia({ name: __filename })
   .use(plug_schemas)
   .use(plug_macro)

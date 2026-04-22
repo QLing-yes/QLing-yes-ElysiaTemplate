@@ -5,15 +5,16 @@ import path from "node:path";
 
 /** 流式写入
  * @param filePath 路径
- * @param flags    https://nodejs.cn/api/fs/file_system_flags.html
+ * @param flags    文件系统标志，默认为 "w"（写入模式，文件不存在则创建，存在则清空）
+ *                https://nodejs.cn/api/fs/file_system_flags.html
  */
 export function write(filePath: string, flags = "w"): fs.WriteStream {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
   return fs.createWriteStream(filePath, {
     flags,
-    mode: 0o666,
-    encoding: "utf8",
+    mode: 0o666,  // 文件权限：所有者可读写，组和其他用户可读写（rw-rw-rw-）
+    encoding: "utf8",  // 编码格式：UTF-8
   });
 }
 
@@ -51,8 +52,8 @@ export function createDir(pathStr: string, dirOnly?: boolean): string {
 }
 
 /** 生成文件路径树
- * @param suffix 要匹配的文件名结尾
- * @param pattern  glob 模式
+ * @param suffix 要匹配的文件名结尾 示例: ['.ext.ts']
+ * @param pattern  glob 匹配模式  示例: '*.ts'
  */
 export function filePathTree(suffix: string[], pattern: string | string[]) {
   const FilePathList = fs

@@ -13,8 +13,8 @@ export function write(filePath: string, flags = "w"): fs.WriteStream {
 
   return fs.createWriteStream(filePath, {
     flags,
-    mode: 0o666,  // 文件权限：所有者可读写，组和其他用户可读写（rw-rw-rw-）
-    encoding: "utf8",  // 编码格式：UTF-8
+    mode: 0o666, // 文件权限：所有者可读写，组和其他用户可读写（rw-rw-rw-）
+    encoding: "utf8", // 编码格式：UTF-8
   });
 }
 

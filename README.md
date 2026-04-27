@@ -3,6 +3,7 @@
 ## 预发布版本
 
 - `1.0.0` 版本起即为正式版。
+- `bun create app-elysia@latest` - 尝鲜体验
 
 ## 项目结构
 

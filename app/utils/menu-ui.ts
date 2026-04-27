@@ -14,6 +14,7 @@ export type MenuItem = {
   /** 描述说明 */
   remark?: string;
   /** 执行函数（叶子项） */
+  // biome-ignore lint/suspicious/noExplicitAny: <any return>
   fun?: () => any;
   /** 子菜单（分组项） */
   children?: MenuItem[];
@@ -23,8 +24,8 @@ export type MenuItem = {
 
 const HIDE = "\x1b[?25l";
 const SHOW = "\x1b[?25h";
-const SEP  = "─".repeat(40);
-const WIN  = process.platform === "win32";
+const SEP = "─".repeat(40);
+const WIN = process.platform === "win32";
 
 // ── 终端工具 ─────────────────────────────────────────────────
 
@@ -69,10 +70,12 @@ function parseWinCmd(cmd: string): [string, string[]] {
 
   if (envs.length === 0) return ["cmd", ["/c", cmd]];
 
-  const setCmd = envs.map((e) => {
-    const i = e.indexOf("=");
-    return `set "${e.slice(0, i)}=${e.slice(i + 1)}"`;
-  }).join(" && ");
+  const setCmd = envs
+    .map((e) => {
+      const i = e.indexOf("=");
+      return `set "${e.slice(0, i)}=${e.slice(i + 1)}"`;
+    })
+    .join(" && ");
 
   return ["cmd", ["/c", `${setCmd} && ${rest}`]];
 }
@@ -122,12 +125,15 @@ function buildHints(item: MenuItem, isSubMenu: boolean): string {
  */
 function render(items: MenuItem[], sel: number, breadcrumb: string[]): string {
   const isSubMenu = breadcrumb.length > 0;
-  const counter   = `\x1b[2m(${sel + 1}/${items.length})\x1b[0m`;
+  const counter = `\x1b[2m(${sel + 1}/${items.length})\x1b[0m`;
 
   let s = "\x1b[2J\x1b[H";
-  s += "\x1b[38;5;45m╭──────────────────────────────────────────────────╮\x1b[0m\n";
-  s += "\x1b[38;5;45m│\x1b[0m        \x1b[1;36m🚀 命令菜单    \x1b[0m                          \x1b[38;5;45m│\x1b[0m\n";
-  s += "\x1b[38;5;45m╰──────────────────────────────────────────────────╯\x1b[0m\n";
+  s +=
+    "\x1b[38;5;45m╭──────────────────────────────────────────────────╮\x1b[0m\n";
+  s +=
+    "\x1b[38;5;45m│\x1b[0m        \x1b[1;36m🚀 命令菜单    \x1b[0m                          \x1b[38;5;45m│\x1b[0m\n";
+  s +=
+    "\x1b[38;5;45m╰──────────────────────────────────────────────────╯\x1b[0m\n";
   s += isSubMenu
     ? `\x1b[2m  ${breadcrumb.join(" › ")}\x1b[0m  ${counter}\n`
     : `  ${counter}\n`;
@@ -169,16 +175,24 @@ async function handleEnter(it: MenuItem, breadcrumb: string[]): Promise<void> {
  * @param items 菜单项列表
  * @param breadcrumb 面包屑路径（根层默认空数组）
  */
-export async function navigate(items: MenuItem[], breadcrumb: string[] = []): Promise<void> {
+export async function navigate(
+  items: MenuItem[],
+  breadcrumb: string[] = [],
+): Promise<void> {
   // 非 TTY 环境（如 CI / 管道）直接跳过交互
   if (!process.stdin.isTTY) {
-    console.error("\x1b[33m警告：非交互式终端，请通过参数直接指定目标项\x1b[0m");
+    console.error(
+      "\x1b[33m警告：非交互式终端，请通过参数直接指定目标项\x1b[0m",
+    );
     return;
   }
 
   let idx = 0;
-  const rd  = () => process.stdout.write(render(items, idx, breadcrumb));
-  const fin = () => { process.stdout.write(SHOW); process.stdin.setRawMode(false).pause(); };
+  const rd = () => process.stdout.write(render(items, idx, breadcrumb));
+  const fin = () => {
+    process.stdout.write(SHOW);
+    process.stdin.setRawMode(false).pause();
+  };
 
   process.stdout.write(HIDE);
   rd();
@@ -187,13 +201,29 @@ export async function navigate(items: MenuItem[], breadcrumb: string[] = []): Pr
     const onKey = async (k: unknown) => {
       const key = String(k);
 
-      if (key === "\x03") { fin(); console.log("\n\x1b[33m已退出\x1b[0m\n"); process.exit(0); }
+      if (key === "\x03") {
+        fin();
+        console.log("\n\x1b[33m已退出\x1b[0m\n");
+        process.exit(0);
+      }
 
       // 导航键：单行处理，无额外嵌套
-      if (key === "\x1b[A")                          { idx = (idx - 1 + items.length) % items.length; return rd(); }
-      if (key === "\x1b[B")                          { idx = (idx + 1) % items.length;                return rd(); }
-      if (key === "\x1b[H" || key === "\x1b[1~")     { idx = 0;                                       return rd(); }
-      if (key === "\x1b[F" || key === "\x1b[4~")     { idx = items.length - 1;                        return rd(); }
+      if (key === "\x1b[A") {
+        idx = (idx - 1 + items.length) % items.length;
+        return rd();
+      }
+      if (key === "\x1b[B") {
+        idx = (idx + 1) % items.length;
+        return rd();
+      }
+      if (key === "\x1b[H" || key === "\x1b[1~") {
+        idx = 0;
+        return rd();
+      }
+      if (key === "\x1b[F" || key === "\x1b[4~") {
+        idx = items.length - 1;
+        return rd();
+      }
 
       // ESC / ← 返回上级
       if ((key === "\x1b" || key === "\x1b[D") && breadcrumb.length > 0) {
@@ -235,7 +265,10 @@ export async function navigate(items: MenuItem[], breadcrumb: string[] = []): Pr
 export function collectLeaves(
   items: MenuItem[],
   path: string[] = [],
-): Array<{ /** 从根到叶子的完整路径 */ path: string[]; /** 叶子菜单项 */ item: MenuItem }> {
+): Array<{
+  /** 从根到叶子的完整路径 */ path: string[] /** 叶子菜单项 */;
+  item: MenuItem;
+}> {
   return items.flatMap((it) =>
     it.children
       ? collectLeaves(it.children, [...path, it.name])
@@ -252,15 +285,19 @@ export function collectLeaves(
 export function resolveArgs(
   root: MenuItem[],
   args: string[],
-): { /** 命中的菜单项 */ item: MenuItem; /** 路径面包屑 */ breadcrumb: string[] } | null {
+): {
+  /** 命中的菜单项 */ item: MenuItem /** 路径面包屑 */;
+  breadcrumb: string[];
+} | null {
   let items = root;
   const breadcrumb: string[] = [];
   let item: MenuItem | undefined;
 
   for (const arg of args) {
     const q = arg.toLowerCase();
-    item = items.find((it) => it.name.toLowerCase() === q)
-        ?? items.find((it) => it.name.toLowerCase().includes(q));
+    item =
+      items.find((it) => it.name.toLowerCase() === q) ??
+      items.find((it) => it.name.toLowerCase().includes(q));
     if (!item) return null;
     breadcrumb.push(item.name);
     if (item.children) items = item.children;
@@ -286,8 +323,13 @@ export async function entry(root: MenuItem[]): Promise<void> {
     let lastGroup = "";
     for (const { path, item } of collectLeaves(root)) {
       const group = path.slice(0, -1).join(" › ");
-      if (group !== lastGroup) { console.log(orange(`  ${group}`)); lastGroup = group; }
-      console.log(`    \x1b[2m·\x1b[0m ${item.name}  \x1b[90m${item.remark ?? ""}\x1b[0m`);
+      if (group !== lastGroup) {
+        console.log(orange(`  ${group}`));
+        lastGroup = group;
+      }
+      console.log(
+        `    \x1b[2m·\x1b[0m ${item.name}  \x1b[90m${item.remark ?? ""}\x1b[0m`,
+      );
     }
     console.log();
     return;
@@ -301,7 +343,7 @@ export async function entry(root: MenuItem[]): Promise<void> {
       process.exit(1);
     }
     const { item, breadcrumb } = result;
-    if (item.fun)           await item.fun();
+    if (item.fun) await item.fun();
     else if (item.children) await navigate(item.children, breadcrumb);
     return;
   }

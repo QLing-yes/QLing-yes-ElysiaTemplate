@@ -1,5 +1,5 @@
-import { openapi } from "@elysiajs/openapi";
-import { staticPlugin } from "@elysiajs/static";
+import { openapi } from "@elysia/openapi";
+import { staticPlugin } from "@elysia/static";
 import { Elysia } from "elysia";
 import routes from "@/support/generated/routes";
 import plug_controller from "./controller.plug";

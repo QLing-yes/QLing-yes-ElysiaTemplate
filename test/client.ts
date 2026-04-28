@@ -1,4 +1,4 @@
-import { treaty } from "@elysiajs/eden";
+import { treaty } from "@elysia/eden";
 import type { APP } from "../app/index.ts";
 
 const client = treaty<APP>("localhost:3000");

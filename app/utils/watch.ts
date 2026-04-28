@@ -22,13 +22,12 @@ function matchSuffix(normalized: string, suffix: string[]): boolean {
 /**
  * 启动目录监听，文件新增 / 删除时调用 `onChange`
  * @param   options 监听选项 {@link WatchOptions}
- * @returns 停止监听的函数
- * @throws  目录不存在时抛出 Error
+ * @returns 目录不存在时返回 null，否则返回停止监听的函数
  */
-export function watchDir(options: WatchOptions): () => void {
+export function watchDir(options: WatchOptions): null | (() => void) {
   const { dir, suffix = [], debounce = 300, onChange } = options;
-  if (!fs.existsSync(dir))
-    throw new Error(`[watchDir] directory not found: ${dir}`);
+  if (!fs.existsSync(dir)) return null;
+
   let timer: ReturnType<typeof setTimeout> | null = null;
 
   /**

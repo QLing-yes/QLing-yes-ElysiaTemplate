@@ -119,6 +119,7 @@ const DEFAULT_CONFIG = {
   },
 };
 
+/** 文件路由 生成器 */
 export default function generate(op: Config) {
   const config = {
     ...DEFAULT_CONFIG,

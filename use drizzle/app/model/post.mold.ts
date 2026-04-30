@@ -8,7 +8,7 @@ import {
   varchar,
 } from "drizzle-orm/mysql-core";
 import { createInsertSchema } from "drizzle-typebox";
-import { table as user } from "./user";
+import { table as user } from "./user.mold";
 
 export const table = mysqlTable("post", {
   id: serial("id").primaryKey(),

@@ -1,8 +1,8 @@
 import { drizzle as orm } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import { logger } from "@/app/lib/logger";
-import { table as post, tableRelations as postRelations } from "../model/post";
-import { table as user, tableRelations as userRelations } from "../model/user";
+import { table as post, tableRelations as postRelations } from "../model/post.mold";
+import { table as user, tableRelations as userRelations } from "../model/user.mold";
 
 const pool = mysql.createPool({
   uri: process.env.DATABASE_URL!,

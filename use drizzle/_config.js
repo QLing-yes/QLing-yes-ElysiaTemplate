@@ -22,7 +22,7 @@ export default function ({ projectDir }) {
             ...pkg.dependencies,
             "drizzle-orm": "0.45.2",
             "drizzle-typebox": "0.3.3",
-            "mysql2": "3.22.0",
+            "mysql2": "3.22.3",
         };
         pkg.devDependencies = {
             ...pkg.devDependencies,

@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { mysqlTable, serial, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema } from "drizzle-typebox";
-import { table as post } from "./post";
+import { table as post } from "./post.mold";
 
 export const table = mysqlTable("user", {
   id: serial("id").primaryKey(),

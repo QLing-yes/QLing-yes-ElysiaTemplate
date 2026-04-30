@@ -35,7 +35,7 @@ export default function generate(conf: Partial<typeof confing>) {
     .join("\n");
 
   const file = write(op.out);
-  file.write("//auto generated");
+  file.write("//auto generated\n");
   file.write(content);
   file.close();
 }

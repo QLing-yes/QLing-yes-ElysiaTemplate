@@ -1,3 +1,4 @@
+export { drizzle as db } from "@/app/lib/drizzle";
 export { logger } from "@/app/lib/logger";
 export { redis } from "@/app/lib/redis";
 export { ResSchemaFun } from "./schemaDerive";

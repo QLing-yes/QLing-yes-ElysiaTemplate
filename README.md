@@ -6,9 +6,6 @@
 - `bun create app-elysia@latest` - 尝鲜体验
 
 ## 项目结构
-
-> ⚠️ **注意**：Prisma、Drizzle 相关文件仅在通过 CLI 选择对应模板时生成。
-
 - 全自动路由、日志系统、ORM、端到端类型安全，更多功能即将推出。
 
 ```
@@ -24,7 +21,6 @@ Project/
 │   │   ├── error.ts          # 全局错误与进程事件捕获记录 (同步模式)
 │   │   ├── logger.ts         # 日志库 (默认异步模式)
 │   │   ├── drizzle.ts        # Drizzle 客户端
-│   │   ├── prisma.ts         # Prisma 客户端
 │   │   └── redis.ts          # Redis 客户端
 │   ├── model/                # Drizzle 数据模型目录
 │   ├── plugins/
@@ -36,8 +32,6 @@ Project/
 │   └── cluster.ts            # 单机多进程集群模式入口
 │   └── index.ts              # 应用入口
 ├── logs/
-├── prisma/
-│   └── schema.prisma         # Prisma 数据模型
 ├── test/                     # Eden 测试目录
 ├── support/                  # 辅助脚本目录（无需关心）
 │   └── script/
@@ -45,7 +39,6 @@ Project/
 │       ├── menu.ts           # 命令菜单
 │       └── routes.ts         # 路由生成工具
 |── .env                      # 配置文件
-|── prisma.config.ts          # prisma 配置
 |── drizzle.config.ts         # drizzle 配置
 ...
 ```
@@ -58,18 +51,11 @@ bun create app-elysia@latest
 
 - 当然，你也可以直接下载本仓库使用。
 
-### 选择 Drizzle 模板后，请按以下步骤进行配置：
+### 请按以下步骤配置 Drizzle
 
 1. **检查数据库配置** — 确认 [.env](.env) 中的数据库连接信息是否正确
 2. **确认数据模型** — 检查 [app/model](app/model) 中的模型定义是否符合需求
 3. **同步到数据库** — 运行 `bun run generate_drizzle` + `bun run drizzle_migrate`
-
-### 选择 Prisma 模板后，请按以下步骤进行配置：
-
-1. **检查数据库配置** — 确认 [.env](.env) 中的数据库连接信息是否正确
-2. **确认数据模型** — 检查 [schema.prisma](prisma/schema.prisma) 中的模型定义是否符合需求
-3. **同步到数据库**（新数据库时执行）— 运行 `bunx --bun prisma migrate dev --name init` 创建初始迁移
-4. **生成客户端** — 执行 `bunx --bun prisma generate` 生成 Prisma Client
 
 ## 快速开始
 
@@ -93,9 +79,6 @@ bun run generate_script  # 生成路由（一般不需要手动执行）
 bun run drizzle_studio  # drizzle可视化
 bun run generate_drigrate_migrate # 生成迁移并执行
 
-bun run prisma_studio  # prisma可视化
-bun run generate_prisma_migrate_dev  # prisma开发：迁移 + 执行 + 生成客户端
-bun run prisma_generate_migrate_deploy  # prisma生产：执行迁移 + 生成客户端
 ```
 - `bun run menu --list` 列出所有选项
 - `bun run menu <父级> <子项> <...>` 支持按路径逐级定位执行

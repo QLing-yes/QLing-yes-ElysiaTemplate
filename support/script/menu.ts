@@ -341,7 +341,7 @@ const menuItems: MenuItem[] = [
     children: [
       {
         name: "all",
-        remark: "路由 + Prisma 客户端 + Drizzle 迁移",
+        remark: "路由 + Drizzle 迁移",
         fun: () => execCmd("bun --parallel 'generate_*'"),
       },
       {
@@ -399,74 +399,7 @@ const menuItems: MenuItem[] = [
         fun: () => execCmd("bun --bun run drizzle-kit up"),
       },
     ],
-  },
-  {
-    name: "prisma",
-    remark: "Prisma 相关",
-    children: [
-      {
-        name: "studio",
-        remark: "✅ 数据库可视化管理",
-        fun: () => execCmd("bunx --bun prisma studio"),
-      },
-      {
-        name: "generate",
-        remark: "✅ 生成/更新 Prisma 客户端",
-        fun: () => execCmd("bunx --bun prisma generate"),
-      },
-      {
-        name: "migrate-dev",
-        remark: "✅ 开发：生成迁移 + 执行",
-        fun: () => execCmd("bunx --bun prisma migrate dev"),
-      },
-      {
-        name: "migrate-dev+generate",
-        remark: "✅ 开发：迁移 + 执行 + 生成客户端",
-        fun: () =>
-          execCmd(
-            "bunx --bun prisma migrate dev && bunx --bun prisma generate",
-          ),
-      },
-      {
-        name: "migrate-deploy",
-        remark: "✅ 生产：仅执行已有迁移",
-        fun: () => execCmd("bunx --bun prisma migrate deploy"),
-      },
-      {
-        name: "migrate-deploy+generate",
-        remark: "✅ 生产：执行迁移 + 生成客户端",
-        fun: () =>
-          execCmd(
-            "bunx --bun prisma migrate deploy && bunx --bun prisma generate",
-          ),
-      },
-      {
-        name: "push",
-        remark: "⚠️ 直接同步结构，不生成迁移",
-        fun: () => execCmd("bunx --bun prisma db push"),
-      },
-      {
-        name: "seed",
-        remark: "✅ 执行种子数据",
-        fun: () => execCmd("bunx --bun prisma db seed"),
-      },
-      {
-        name: "migrate-status",
-        remark: "✅ 查看迁移执行状态",
-        fun: () => execCmd("bunx --bun prisma migrate status"),
-      },
-      {
-        name: "migrate-reset",
-        remark: "🆘 重置数据库（开发用）",
-        fun: () => execCmd("bunx --bun prisma migrate reset"),
-      },
-      {
-        name: "db-wipe",
-        remark: "🆘 清空所有表数据（保留结构）",
-        fun: () => execCmd("bunx --bun prisma db wipe"),
-      },
-    ],
-  },
+  }
 ];
 
 // ── 入口 ─────────────────────────────────────────────────────

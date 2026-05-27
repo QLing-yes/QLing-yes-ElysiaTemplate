@@ -1,7 +1,18 @@
 import { t } from "elysia";
+import { controller } from "@/app/plugins/index.plug";
 
 export default $g.ctrl((app) =>
   app
+    .post(
+      "routers",
+      () => {
+        const list: string[] = controller.routes.map((item) => `[${item.method}]${item.path}`);
+        return $g.success(list);
+      },
+      {
+        res: t.Array(t.Any()),
+      },
+    )
     .post(
       "test",
       ({ body }) => {

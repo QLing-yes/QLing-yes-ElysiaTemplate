@@ -16,7 +16,8 @@ process.on("uncaughtException", (error) => {
  * 当 Promise 被 reject 但没有任何 .catch() 或 await 捕获时触发
  */
 process.on("unhandledRejection", (reason) => {
-  logger.error("unhandledRejection", { reason });
+  const err = reason instanceof Error ? reason : new Error(String(reason));
+  logger.error("unhandledRejection", err);
   console.error(reason);
 });
 

@@ -8,7 +8,11 @@ function client() {
     redis = new RedisClient(process.env.REDIS_URL);
     redis.onconnect = () => logger.info("[redis] connected successfully");
     redis.onclose = (err) => logger.error(`[redis] disconnected:${err}`);
-    if (process.env.REDIS_URL) redis.connect();
+    if (process.env.REDIS_URL) {
+      redis
+        .connect()
+        .catch((error) => logger.error(`[redis] connect error:${error}`));
+    }
   } catch (error) {
     logger.error(`[redis]`, error as Error);
   }

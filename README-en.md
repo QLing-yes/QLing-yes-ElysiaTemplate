@@ -55,7 +55,7 @@ bun create app-elysia@latest
 
 1. **Check database configuration** — Verify the database connection info in [.env](.env) is correct
 2. **Confirm schemas** — Check the schema definitions in [app/model](app/model) meet your requirements
-3. **Sync to database** — Run `bun run generate_drizzle` + `bun run drizzle_migrate`
+3. **Sync to database** — Run `bun run generate_drigrate_migrate`
 
 ## Quick Start
 

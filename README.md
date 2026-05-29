@@ -55,7 +55,7 @@ bun create app-elysia@latest
 
 1. **检查数据库配置** — 确认 [.env](.env) 中的数据库连接信息是否正确
 2. **确认数据模型** — 检查 [app/model](app/model) 中的模型定义是否符合需求
-3. **同步到数据库** — 运行 `bun run generate_drizzle` + `bun run drizzle_migrate`
+3. **同步到数据库** — 运行 `bun run generate_drigrate_migrate`
 
 ## 快速开始
 

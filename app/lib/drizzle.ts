@@ -1,8 +1,7 @@
 import { drizzle as orm } from "drizzle-orm/mysql2";
 import mysql from "mysql2/promise";
 import { logger } from "@/app/lib/logger";
-import { table as post, tableRelations as postRelations } from "../model/post.mold";
-import { table as user, tableRelations as userRelations } from "../model/user.mold";
+import { relations } from "@/app/model/relations";
 
 const pool = mysql.createPool({
   uri: process.env.DATABASE_URL!,
@@ -10,10 +9,7 @@ const pool = mysql.createPool({
   connectionLimit: 10,
 });
 registerEvent();
-export const drizzle = orm(pool, {
-  schema: { post, postRelations, user, userRelations },
-  mode: "default",
-});
+export const drizzle = orm({ client: pool, relations });
 export default drizzle;
 
 function registerEvent() {
